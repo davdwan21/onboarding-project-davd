@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongoose";
-import { Experience } from "@/models/Experience";
+import { Project } from "@/models/Project";
 
-// GET /api/experiences
+// GET /api/projects
 export async function GET() {
   try {
     await connectToDatabase();
-    const experiences = await Experience.find();
-    return NextResponse.json(experiences);
+    const projects = await Project.find();
+    return NextResponse.json(projects);
   } catch (error) {
     return NextResponse.json({
       success: false,

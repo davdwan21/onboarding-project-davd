@@ -28,14 +28,26 @@ const cached: MongooseCache = globalForMongoose.mongoose ?? {
 globalForMongoose.mongoose = cached;
 
 export async function connectToDatabase() {
+  console.log("connecting to db...");
   if (cached.conn) {
+    console.log("using cached db connectinon");
     return cached.conn;
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI as string, {
-      bufferCommands: false,
-    });
+    console.log("creating new connection");
+    cached.promise = mongoose
+      .connect(MONGODB_URI as string, {
+        bufferCommands: false,
+      })
+      .then((m) => {
+        console.log("connected to mongodb");
+        return m;
+      })
+      .catch((err) => {
+        console.error("mongodb connection error:", err);
+        throw err;
+      });
   }
 
   cached.conn = await cached.promise;
