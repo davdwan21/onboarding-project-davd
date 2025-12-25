@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     await connectToDatabase();
     const body = await request.json();
 
-    // validate body information here
+    // further validation required ?
 
     const newProject = await Project.create(body);
     return NextResponse.json(newProject, { status: 201 });

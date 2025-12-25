@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const experienceSchema = new Schema({
-  company: String,
-  title: String,
-  location: String,
-  startDate: String,
+  company: { type: String, required: true },
+  title: { type: String, required: true },
+  location: { type: String, required: true },
+  startDate: { type: String, required: true },
   endDate: String,
-  description: String,
+  description: { type: String, required: true },
 });
 
 export const Experience =

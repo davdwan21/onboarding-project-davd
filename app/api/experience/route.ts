@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     await connectToDatabase();
     const body = await request.json();
 
-    // apparently i need to validate body here before posting
+    // further validation required ?
 
     const newExperience = await Experience.create(body);
 

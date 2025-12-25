@@ -1,11 +1,11 @@
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongoose";
-import { Experience } from "@/models/Experience";
-import mongoose from "mongoose";
+import { Project } from "@/models/Project";
 
 type Params = { id: string };
 
-// GET api/experience/:id
+// GET api/project/:id
 export async function GET(_req: Request, context: { params: Params }) {
   const { id } = context.params;
 
@@ -17,18 +17,18 @@ export async function GET(_req: Request, context: { params: Params }) {
   }
 
   await connectToDatabase();
-  const experience = await Experience.findById(id);
+  const project = await Project.findById(id);
 
-  if (!experience) {
+  if (!project) {
     return NextResponse.json(
-      { success: false, message: "experience not found" },
+      { success: false, message: "project not found" },
       { status: 404 }
     );
   }
-  return NextResponse.json(experience, { status: 200 });
+  return NextResponse.json(project, { status: 200 });
 }
 
-// PUT api/experience/:id
+// PUT api/project/:id
 export async function PUT(req: Request, context: { params: Params }) {
   const { id } = context.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -39,30 +39,30 @@ export async function PUT(req: Request, context: { params: Params }) {
   }
 
   await connectToDatabase();
-  const experience = await Experience.findById(id);
-  if (!experience) {
+  const project = await Project.findById(id);
+  if (!project) {
     return NextResponse.json(
-      { success: false, message: "experience not found" },
+      { success: false, message: "project not found" },
       { status: 404 }
     );
   }
 
   const body = await req.json();
 
-  const updated = await Experience.findByIdAndUpdate(id, body, {
+  const updated = await Project.findByIdAndUpdate(id, body, {
     new: true,
     runValidators: true,
   });
   if (!updated) {
     return NextResponse.json(
-      { success: false, message: "experience not found" },
+      { success: false, message: "project not found" },
       { status: 404 }
     );
   }
   return NextResponse.json(updated, { status: 200 });
 }
 
-// DELETE api/experiences/:id
+// DELETE api/project/:id
 export async function DELETE(_req: Request, context: { params: Params }) {
   const { id } = context.params;
 
@@ -75,10 +75,10 @@ export async function DELETE(_req: Request, context: { params: Params }) {
 
   await connectToDatabase();
 
-  const deleted = await Experience.findByIdAndDelete(id);
+  const deleted = await Project.findByIdAndDelete(id);
   if (!deleted) {
     return NextResponse.json(
-      { success: false, message: "experience not found" },
+      { success: false, message: "project not found" },
       { status: 404 }
     );
   }
