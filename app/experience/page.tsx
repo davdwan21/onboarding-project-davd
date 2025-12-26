@@ -1,16 +1,48 @@
 "use client";
 
+import ExperienceCard from "@/components/ExperienceCard";
+import { Experience } from "@/types/experience";
+import { useState, useEffect } from "react";
+
 export default function ExperiencePage() {
-  // need to declare a list of the collected experiences
+  const [data, setData] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // initialize list with the experiences gotten from API call on page open - useEffect
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/experience");
+        if (!res.ok) {
+          throw new Error(`request failed: ${res.status}`);
+        }
+        const json = await res.json();
+        setData(json);
+      } catch (error: any) {
+        setError(error.message ?? "failed to fetcb experiences");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  });
 
-  // keep track of loading and error states just in case
+  if (loading) {
+    return <p>loading...</p>;
+  }
+  if (error) {
+    return <p>error fetching experiences</p>;
+  }
 
   return (
     <div>
       <h1>Experiences</h1>
-      list of experiences here
+      {data.length === 0 ? (
+        <p>no experiences yet</p>
+      ) : (
+        data.map((exp) => <ExperienceCard key={exp._id} exp={exp} />)
+      )}
     </div>
   );
 }

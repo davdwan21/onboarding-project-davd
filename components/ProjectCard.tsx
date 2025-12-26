@@ -2,7 +2,7 @@
 
 import { Project } from "@/types/project";
 
-export default function ExperienceCard({ project }: { project: Project }) {
+export default function ProjectCard({ project }: { project: Project }) {
   return (
     <div>
       <h3>{project.projectName}</h3>
