@@ -38,7 +38,7 @@ export default function ProjectPage() {
 
   return (
     <div>
-      <h1>Projects</h1>
+      <h1 style={{ fontSize: 30, marginLeft: 20, marginTop: 15 }}>Projects</h1>
       {data.length === 0 ? (
         <p>no projects yet</p>
       ) : (

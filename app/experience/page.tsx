@@ -37,7 +37,9 @@ export default function ExperiencePage() {
 
   return (
     <div>
-      <h1>Experiences</h1>
+      <h1 style={{ fontSize: 30, marginLeft: 20, marginTop: 15 }}>
+        Experiences
+      </h1>
       {data.length === 0 ? (
         <p>no experiences yet</p>
       ) : (
